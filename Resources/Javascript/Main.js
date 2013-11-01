@@ -26,7 +26,7 @@
 
 //Main.js
 (function() {
-    var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
+    var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 20000);
     camera.position.z = 500;
 
     var controls = new THREE.TrackballControls(camera);
@@ -54,14 +54,21 @@
     var geometry = new THREE.SphereGeometry(30, 25, 23, 0, Math.PI * 2, 0, Math.PI);
     var material =  new THREE.MeshLambertMaterial({ color:0x00ff00, shading: THREE.FlatShading });
     
-    for ( var i = 0; i < 10; i ++ ) {
+    for ( var i = 0; i < 30; i ++ ) {
         var mesh = new THREE.Mesh(geometry, material);
+        // var scale = (Math.random() - 0.5) * 10;
+        // mesh.position.x = (Math.random() - 0.5) * 1000;
+        // mesh.position.y = (Math.random() - 0.5) * 1000;
+        // mesh.position.z = (Math.random() - 0.5) * 1000;
+        // mesh.scale.x += scale;
+        // mesh.scale.y += scale;
+        // mesh.scale.z += scale;
         mesh.position.y = i;//(Math.random() - 0.5) * 1000;
         mesh.position.z = i;//(Math.random() - 0.5) * 1000;
         mesh.scale.x += i * 1;
         mesh.scale.y += i * 1;
         mesh.scale.z += i * 1;
-        mesh.position.x = mesh.scale.x * i * 100;//(Math.random() - 0.5) * 1000;
+        mesh.position.x = mesh.scale.x * i * 50;//(Math.random() - 0.5) * 1000;
         mesh.updateMatrix();
         mesh.matrixAutoUpdate = true;
         scene.add(mesh);
