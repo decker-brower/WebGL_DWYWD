@@ -51,14 +51,17 @@
     var scene = new THREE.Scene();
     //scene.fog = new THREE.FogExp2(0xcccccc, 0.002);
 
-    var geometry = new THREE.SphereGeometry(30, 40, 18, 0, Math.PI * 2, 0, Math.PI);
+    var geometry = new THREE.SphereGeometry(30, 25, 23, 0, Math.PI * 2, 0, Math.PI);
     var material =  new THREE.MeshLambertMaterial({ color:0x00ff00, shading: THREE.FlatShading });
     
-    for ( var i = 0; i < 300; i ++ ) {
+    for ( var i = 0; i < 10; i ++ ) {
         var mesh = new THREE.Mesh(geometry, material);
-        mesh.position.x = (Math.random() - 0.5) * 1000;
-        mesh.position.y = (Math.random() - 0.5) * 1000;
-        mesh.position.z = (Math.random() - 0.5) * 1000;
+        mesh.position.y = i;//(Math.random() - 0.5) * 1000;
+        mesh.position.z = i;//(Math.random() - 0.5) * 1000;
+        mesh.scale.x += i * 1;
+        mesh.scale.y += i * 1;
+        mesh.scale.z += i * 1;
+        mesh.position.x = mesh.scale.x * i * 100;//(Math.random() - 0.5) * 1000;
         mesh.updateMatrix();
         mesh.matrixAutoUpdate = true;
         scene.add(mesh);
