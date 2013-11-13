@@ -51,7 +51,7 @@
     // var worldWidth = 256, worldDepth = 256,
     //     worldHalfWidth = worldWidth / 2, worldHalfDepth = worldDepth / 2;
     var scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0xCCCCCC, 250, 1400);
+    scene.fog = new THREE.Fog(0x88CCFF, 250, 1400);
 
     var textOptions = {
         size: 20,
