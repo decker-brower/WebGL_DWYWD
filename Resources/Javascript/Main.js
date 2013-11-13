@@ -52,60 +52,103 @@
     //     worldHalfWidth = worldWidth / 2, worldHalfDepth = worldDepth / 2;
     var scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0xCCCCCC, 250, 1400);
-    // var textOptions = {
-    //     size: 70,
-    //     height: 20,
-    //     curveSegments: 4,
 
-    //     //font: ,
-    //     weight: "bold",
-    //     style: "normal",
+    var textOptions = {
+        size: 20,
+        height: 10,
+        curveSegments: 4,
 
-    //     bevelThickness: 2,
-    //     bevelSize: 1.5,
-    //     bevelEnabled: true,
+        //font: ,
+        weight: "bold",
+        style: "normal",
 
-    //     material: 0,
-    //     extrudeMaterial: 1
-    // };
+        bevelThickness: 2,
+        bevelSize: 1.5,
+        bevelEnabled: true,
+
+        material: 0,
+        extrudeMaterial: 1
+    };
+
     var geometry = new THREE.SphereGeometry(30, 30, 28, 0, Math.PI * 2, 0, Math.PI);
-    // var appleTextGeo = new THREE.TextGeometry("AAPL", textOptions);
-    // var googleTextGeo = new THREE.TextGeometry("GOOG", textOptions);
-    // var microsoftTextGeo = new THREE.TextGeometry("MSFT", textOptions);
-    var appleMaterial = new THREE.MeshPhongMaterial({ambient: 0x999999, color: 0xff0000, specular: 0x101010, shininess: 200});
-    var googleMaterial = new THREE.MeshPhongMaterial({ambient: 0x999999, color: 0x00ff00, specular: 0x101010, shininess: 200});
-    var microsoftMaterial = new THREE.MeshPhongMaterial({ambient: 0x999999, color: 0x0000ff, specular: 0x101010, shininess: 200});
+
+    var appleTextGeo = new THREE.TextGeometry("AAPL", textOptions);
+    var googleTextGeo = new THREE.TextGeometry("GOOG", textOptions);
+    var microsoftTextGeo = new THREE.TextGeometry("MSFT", textOptions);
+
+    var appleTextMaterial = new THREE.MeshFaceMaterial([ 
+        new THREE.MeshPhongMaterial({color: 0xFF0000, shading: THREE.FlatShading}), // front
+        new THREE.MeshPhongMaterial({color: 0xFFFFFF, shading: THREE.SmoothShading}) // side
+    ]);
+    var googleTextMaterial = new THREE.MeshFaceMaterial([ 
+        new THREE.MeshPhongMaterial({color: 0x22AA22, shading: THREE.FlatShading}), // front
+        new THREE.MeshPhongMaterial({color: 0xFFFFFF, shading: THREE.SmoothShading}) // side
+    ]);
+    var microsoftTextMaterial = new THREE.MeshFaceMaterial([ 
+        new THREE.MeshPhongMaterial({color: 0xFF7921, shading: THREE.FlatShading}), // front
+        new THREE.MeshPhongMaterial({color: 0xFFFFFF, shading: THREE.SmoothShading}) // side
+    ]);
+
+    var appleMaterial = new THREE.MeshPhongMaterial({ambient: 0x999999, color: 0xFF0000, specular: 0x101010, shininess: 200});
+    var googleMaterial = new THREE.MeshPhongMaterial({ambient: 0x999999, color: 0x22AA22, specular: 0x101010, shininess: 200});
+    var microsoftMaterial = new THREE.MeshPhongMaterial({ambient: 0x999999, color: 0xFF7921, specular: 0x101010, shininess: 200});
+    
     var appleMesh = new THREE.Mesh(geometry, appleMaterial);
     var googleMesh = new THREE.Mesh(geometry, googleMaterial);
     var microsoftMesh = new THREE.Mesh(geometry, microsoftMaterial);
-    var plane = new THREE.Mesh(new THREE.PlaneGeometry(10000, 10000), new THREE.MeshPhongMaterial({ambient: 0x999999, color: 0x999999, specular: 0x101010}));
+
+    var appleTextMesh = new THREE.Mesh(appleTextGeo, appleTextMaterial);
+    var googleTextMesh = new THREE.Mesh(googleTextGeo, googleTextMaterial);
+    var microsoftTextMesh = new THREE.Mesh(microsoftTextGeo, microsoftTextMaterial);
+
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(10000, 10000), new THREE.MeshPhongMaterial({ambient: 0x999999, color: 0x4444FF, specular: 0x101010}));
 
     appleMesh.position.y = 0;
-    appleMesh.position.x = -100;
+    appleMesh.position.x = -200;
     appleMesh.position.z = 0;
     appleMesh.updateMatrix();
     appleMesh.matrixAutoUpdate = true;
     appleMesh.castShadow = true;
+
+    appleTextMesh.position.y = appleMesh.position.y + 50;
+    appleTextMesh.position.x = appleMesh.position.x - 35;
+    appleTextMesh.position.z = appleMesh.position.z;
+
     googleMesh.position.y = 0;
     googleMesh.position.x = 0;
     googleMesh.position.z = 0;
     googleMesh.updateMatrix();
     googleMesh.matrixAutoUpdate = true;
     googleMesh.castShadow = true;
+
+    googleTextMesh.position.y = googleMesh.position.y + 50;
+    googleTextMesh.position.x = googleMesh.position.x - 45;
+    googleTextMesh.position.z = googleMesh.position.z;
+
     microsoftMesh.position.y = 0;
-    microsoftMesh.position.x = 100;
+    microsoftMesh.position.x = 200;
     microsoftMesh.position.z = 0;
     microsoftMesh.updateMatrix();
     microsoftMesh.matrixAutoUpdate = true;
     microsoftMesh.castShadow = true;
+
+    microsoftTextMesh.position.y = microsoftMesh.position.y + 50;
+    microsoftTextMesh.position.x = microsoftMesh.position.x - 35;
+    microsoftTextMesh.position.z = microsoftMesh.position.z;
 
     plane.position.y = -50;
     plane.rotation.x = - Math.PI / 2;
     plane.recieveShadow = true;
 
     scene.add(appleMesh);
+    scene.add(appleTextMesh);
+
     scene.add(googleMesh);
+    scene.add(googleTextMesh);
+
     scene.add(microsoftMesh);
+    scene.add(microsoftTextMesh);
+
     scene.add(plane);
 
     OBJECTS.push(appleMesh);
@@ -146,7 +189,13 @@
     //var lightThree = new THREE.AmbientLight(0x222222);
     //scene.add(lightThree);
 
-    addShadowedLight( 200, 200, 200, 0xffffff, 1.35 );
+    addShadowedLight(
+        0,
+        200,
+        500,
+        0xffffff,
+        1.35
+    );
     //addShadowedLight( -100, -100, -100, 0xffaa00, 1 );
 
     // var pointLight = new THREE.PointLight(0xffffff, 1.5);
@@ -187,7 +236,7 @@
         scene.add( directionalLight );
 
         directionalLight.castShadow = true;
-        directionalLight.shadowCameraVisible = true;
+        //directionalLight.shadowCameraVisible = true;
 
         var d = 100;
         directionalLight.shadowCameraLeft = -d;
