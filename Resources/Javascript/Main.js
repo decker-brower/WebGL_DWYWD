@@ -191,12 +191,18 @@
 
     addShadowedLight(
         0,
-        200,
-        500,
+        400,
+        300,
         0xffffff,
         1.35
     );
-    //addShadowedLight( -100, -100, -100, 0xffaa00, 1 );
+    addShadowedLight(
+        0,
+        -400,
+        150,
+        0xffaa00,
+        0.5
+    );
 
     // var pointLight = new THREE.PointLight(0xffffff, 1.5);
     // pointLight.position.set(0, 100, 90);
