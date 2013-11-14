@@ -31,6 +31,7 @@
 
     var controls = new THREE.TrackballControls(camera);
     var OBJECTS = [];
+    var TEXTOBJECTS = [];
 
     controls.rotateSpeed = 1.0;
     controls.zoomSpeed = 1.2;
@@ -48,8 +49,8 @@
 
     // WORLD
 
-    // var worldWidth = 256, worldDepth = 256,
-    //     worldHalfWidth = worldWidth / 2, worldHalfDepth = worldDepth / 2;
+    var worldWidth = 10000, worldDepth = 10000,
+        worldHalfWidth = worldWidth / 2, worldHalfDepth = worldDepth / 2;
     var scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0x88CCFF, 250, 1400);
 
@@ -101,7 +102,7 @@
     var googleTextMesh = new THREE.Mesh(googleTextGeo, googleTextMaterial);
     var microsoftTextMesh = new THREE.Mesh(microsoftTextGeo, microsoftTextMaterial);
 
-    var plane = new THREE.Mesh(new THREE.PlaneGeometry(10000, 10000), new THREE.MeshPhongMaterial({ambient: 0x999999, color: 0x4444FF, specular: 0x101010}));
+    var plane = new THREE.Mesh(new THREE.PlaneGeometry(worldWidth, worldWidth), new THREE.MeshPhongMaterial({ambient: 0x999999, color: 0x4444FF, specular: 0x101010}));
 
     appleMesh.position.y = 0;
     appleMesh.position.x = -200;
@@ -154,6 +155,10 @@
     OBJECTS.push(appleMesh);
     OBJECTS.push(googleMesh);
     OBJECTS.push(microsoftMesh);
+
+    TEXTOBJECTS.push(appleTextMesh);
+    TEXTOBJECTS.push(googleTextMesh);
+    TEXTOBJECTS.push(microsoftTextMesh);
 
     // for ( var i = 0; i < 3; i ++ ) {
     //     var mesh = new THREE.Mesh(geometry, material);
@@ -266,12 +271,51 @@
         render();
     };
 
+    var fastSin = function( steps ) {
+        var table = [],
+        ang = 0,
+        angStep = ( Math.PI * 2 ) / steps;
+
+        do {
+            table.push( Math.sin( ang ) );
+            ang += angStep;
+        }
+        while( ang < Math.PI * 2 );
+
+        return table;
+    };
+
+    var sinTable = fastSin( 4096 ),
+        i, x = 0;
+    console.log(sinTable);
+    var drawGraph = function( ang, freq, height ) {
+        for(var n = 0; n < OBJECTS.length; n++)
+        {
+            //OBJECTS[n].scale.x += 0.006;
+            //OBJECTS[n].scale.y += 0.006;
+            //OBJECTS[n].scale.z += 0.006;
+            //OBJECTS[n].rotation.x += 0.06;
+            //OBJECTS[n].rotation.y += 0.06;
+            //OBJECTS[n].rotation.z += 0.06;
+            //OBJECTS[n].position.x += 0.08;
+            OBJECTS[n].position.y = 160 - height + sinTable[ ( ang + ( i * freq ) ) & 4095 ] * height;
+            //OBJECTS[n].position.z += 0.06;
+
+            //TEXTOBJECTS[n].scale.x += 0.006;
+            //TEXTOBJECTS[n].scale.y += 0.006;
+            //TEXTOBJECTS[n].scale.z += 0.006;
+            //TEXTOBJECTS[n].rotation.x += 0.06;
+            //TEXTOBJECTS[n].rotation.y += 0.06;
+            //TEXTOBJECTS[n].rotation.z += 0.06;
+            //TEXTOBJECTS[n].position.x += 0.06;
+            //TEXTOBJECTS[n].position.y += 0.2;
+            //TEXTOBJECTS[n].position.z += 0.2;
+        }
+    };
+
     var render = function () {
-        // for(var n = 0; n < OBJECTS.length; n++)
-        // {
-        //     OBJECTS[n].rotation.x += 0.06;
-        //     OBJECTS[n].rotation.y += 0.06;
-        // }
+        drawGraph( x * 50, 32 - ( sinTable[ ( x * 20 ) & 4095 ] * 16 ), 150 - ( sinTable[ ( x * 10 ) & 4095 ] * 20 ) );
+        x++;
 
         renderer.render(scene, camera);
     };
