@@ -54,6 +54,33 @@
     var scene = new THREE.Scene();
     scene.fog = new THREE.Fog(0x88CCFF, 250, 1400);
 
+    // material samples
+
+    // var urls = [ skyImage.src, skyImage.src,
+    //              skyImage.src, skyImage.src,
+    //              skyImage.src, skyImage.src ];
+
+    // var textureCube = THREE.ImageUtils.loadTextureCube(urls, new THREE.CubeRefractionMapping());
+
+    // var cubeMaterial3 = new THREE.MeshBasicMaterial({color: 0xccddff, envMap: textureCube, refractionRatio: 0.98, reflectivity:0.9});
+    // var cubeMaterial2 = new THREE.MeshBasicMaterial({color: 0xccfffd, envMap: textureCube, refractionRatio: 0.985});
+    // var cubeMaterial1 = new THREE.MeshBasicMaterial({color: 0xffffff, envMap: textureCube, refractionRatio: 0.98})
+
+    // // Skybox
+
+    // var shader = THREE.ShaderLib[ "cube" ];
+    // shader.uniforms[ "tCube" ].value = textureCube;
+
+    // var material = new THREE.ShaderMaterial({
+    //     fragmentShader: shader.fragmentShader,
+    //     vertexShader: shader.vertexShader,
+    //     uniforms: shader.uniforms,
+    //     side: THREE.BackSide
+    // }),
+
+    // mesh = new THREE.Mesh( new THREE.CubeGeometry( 100000, 100000, 100000 ), material );
+    // scene.add( mesh );
+
     var textOptions = {
         size: 20,
         height: 10,
@@ -292,21 +319,21 @@
         for(var n = 0; n < OBJECTS.length; n++)
         {
             //OBJECTS[n].scale.x += 0.006;
-            //OBJECTS[n].scale.y += 0.006;
-            //OBJECTS[n].scale.z += 0.006;
-            //OBJECTS[n].rotation.x += 0.06;
+            // OBJECTS[n].scale.y += 0.006;
+            // OBJECTS[n].scale.z += 0.006;
+            // OBJECTS[n].rotation.x += 0.06;
             //OBJECTS[n].rotation.y += 0.06;
             //OBJECTS[n].rotation.z += 0.06;
-            //OBJECTS[n].position.x += 0.08;
+            //OBJECTS[n].position.x = 160 - height + sinTable[ ( ang + ( i * freq ) ) & 4095 ] * height;
             OBJECTS[n].position.y = 160 - height + sinTable[ ( ang + ( i * freq ) ) & 4095 ] * height;
-            //OBJECTS[n].position.z += 0.06;
+            //OBJECTS[n].position.z = 160 - height + sinTable[ ( ang + ( i * freq ) ) & 4095 ] * height;
 
             //TEXTOBJECTS[n].scale.x += 0.006;
             //TEXTOBJECTS[n].scale.y += 0.006;
             //TEXTOBJECTS[n].scale.z += 0.006;
-            //TEXTOBJECTS[n].rotation.x += 0.06;
-            //TEXTOBJECTS[n].rotation.y += 0.06;
-            //TEXTOBJECTS[n].rotation.z += 0.06;
+            TEXTOBJECTS[n].rotation.x += 0.06;
+            TEXTOBJECTS[n].rotation.y += 0.06;
+            TEXTOBJECTS[n].rotation.z += 0.06;
             //TEXTOBJECTS[n].position.x += 0.06;
             //TEXTOBJECTS[n].position.y += 0.2;
             //TEXTOBJECTS[n].position.z += 0.2;
